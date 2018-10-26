@@ -15,6 +15,6 @@ export default class BobrossSketchView extends PureComponent {
   }
 
   render() {
-    return <Container innerRef={(comp) => { this.component = comp; }} />;
+    return <Container ref={(comp) => { this.component = comp; }} />;
   }
 }
