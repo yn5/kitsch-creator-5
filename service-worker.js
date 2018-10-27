@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/kitsch-creator-5/precache-manifest.bfae31a51a5d826785a67763af491d74.js"
+  "/kitsch-creator-5/precache-manifest.804a034ac94fb8d2de2fe433ee6ce9a7.js"
 );
 
 workbox.clientsClaim();

@@ -12,7 +12,7 @@ self.__precacheManifest = [
     "url": "/kitsch-creator-5/static/js/1.076c04f7.chunk.js"
   },
   {
-    "revision": "fb5561acc2bd830b289172bec5c72c43",
+    "revision": "b6e0f16cbeb2ab8006ef0b3fb90a0e31",
     "url": "/kitsch-creator-5/index.html"
   }
 ];
