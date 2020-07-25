@@ -3199,10 +3199,10 @@ eslint-config-react-app@^3.0.4:
   dependencies:
     confusing-browser-globals "^1.0.4"
 
-eslint-config-wslfx@1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/eslint-config-wslfx/-/eslint-config-wslfx-1.0.8.tgz#418a08b68727da264c77e5e0b7d65013fc37d541"
-  integrity sha512-NsdJRAjXKKDEL0D34gr2+HCyl7RP4AYfj0D+piQmUzejrUnezHK23A9YeoM6SuGiX/YjbsNgGHo5C8bqNuO5ug==
+eslint-config-wslfx@1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/eslint-config-wslfx/-/eslint-config-wslfx-1.0.9.tgz#288fa0fc0d6cef15595107fcbb95d28a1d7e071c"
+  integrity sha512-c+S9r/vR5WehZSHCOx0r7XY9mgv62MXWrqChHR7L4K7ZhPIrkqGsSc1IvuFfszKHLNF3zagstvOfZD2R2nG6ug==
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.2"
