@@ -71,7 +71,6 @@ function* sizeGenerator() {
   }
 }
 
-
 const getColorR = colorGenerator();
 const getColorG = colorGenerator();
 const getColorB = colorGenerator();
