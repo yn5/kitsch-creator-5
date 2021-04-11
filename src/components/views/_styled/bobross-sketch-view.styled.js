@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 100vh;
-  overflow: hidden;
-  width: 100vw;
+  width: 100%;
+  display: flex;
+  flex: 1 1 auto;
+  overflow: auto;
 `;
 
 export const Overlay = styled.div`
