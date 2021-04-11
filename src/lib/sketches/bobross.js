@@ -1,35 +1,24 @@
-const minute = 60 * 1000;
-const drawingDuration = 0.2 * minute;
-const pauseDuration = 0.5 * minute;
-let paused = false;
-let viewWidth;
-let viewHeight;
-
 function getRandomPoint(jitter) {
-  return (Math.random() * jitter) - (jitter / 2);
+  return Math.random() * jitter - jitter / 2;
 }
 
 function getRandomSizePoint(jitter) {
-  return ((Math.random() ** 1.25) * jitter) - (jitter / 2);
+  return Math.random() ** 1.25 * jitter - jitter / 2;
 }
 
 function clip(input, min, max) {
   return Math.min(max, Math.max(min, input));
 }
 
-function pause(ps) {
-  paused = !!ps;
-}
-
 function* colorGenerator() {
   const jitter = 2;
   let clr;
 
-  yield clr = Math.random() * 255;
+  yield (clr = Math.random() * 255);
 
   while (true) {
-    clr += ((Math.random() * jitter) - (jitter / 2));
-    yield clr = clip(clr, 0, 255);
+    clr += Math.random() * jitter - jitter / 2;
+    yield (clr = clip(clr, 0, 255));
   }
 }
 
@@ -54,7 +43,7 @@ function* positionGenerator() {
 }
 
 function* sizeGenerator() {
-  let x = (Math.random() ** 2) * 150;
+  let x = Math.random() ** 2 * 150;
 
   yield {
     x,
@@ -78,51 +67,51 @@ const getColorA = colorGenerator();
 const getPosition = positionGenerator();
 const getSize = sizeGenerator();
 
-const drawEllipse = (sketch) => {
-  const colorR = getColorR.next().value;
-  const colorG = getColorG.next().value;
-  const colorB = getColorB.next().value;
-  const colorA = getColorA.next().value;
-  const colorStroke = colorR * 0.35;
+class BobrossSketch {
+  paused = false;
 
-  const { x, y } = getPosition.next().value;
-  const position = { x: x * viewWidth, y: y * viewHeight };
-  const size = getSize.next().value;
+  viewWidth = null;
 
-  sketch.stroke(colorStroke);
-  sketch.fill(colorR, colorG, colorB, colorA);
-  sketch.ellipse(position.x, position.y, size.y, size.x);
-};
+  viewHeight = null;
 
-function togglePause(sketch) {
-  if (!paused) {
-    sketch.clear();
-  }
-  setTimeout(() => {
-    pause(!paused);
-    togglePause(sketch);
-  }, paused ? pauseDuration : drawingDuration);
-}
+  setup = (sketch) => () => {
+    this.viewWidth = document.body.offsetWidth;
+    this.viewHeight = document.body.offsetHeight;
+    sketch.createCanvas(this.viewWidth, this.viewHeight);
 
-function setup(sketch) {
-  return () => {
-    viewWidth = document.body.offsetWidth;
-    viewHeight = document.body.offsetHeight;
-    sketch.createCanvas(viewWidth, viewHeight);
-    togglePause(sketch);
+    this.sketch = sketch;
   };
-}
 
-function draw(sketch) {
-  return () => {
-    if (paused) {
+  draw = (sketch) => () => {
+    if (this.paused) {
       return;
     }
-    Array.from(Array(100).keys()).map(() => drawEllipse(sketch));
+    Array.from(Array(100).keys()).map(() => this.drawEllipse(sketch));
+  };
+
+  clear = () => {
+    this.sketch.clear();
+  };
+
+  togglePause = () => {
+    this.paused = !this.paused;
+  };
+
+  drawEllipse = (sketch) => {
+    const colorR = getColorR.next().value;
+    const colorG = getColorG.next().value;
+    const colorB = getColorB.next().value;
+    const colorA = getColorA.next().value;
+    const colorStroke = colorR * 0.35;
+
+    const { x, y } = getPosition.next().value;
+    const position = { x: x * this.viewWidth, y: y * this.viewHeight };
+    const size = getSize.next().value;
+
+    sketch.stroke(colorStroke);
+    sketch.fill(colorR, colorG, colorB, colorA);
+    sketch.ellipse(position.x, position.y, size.y, size.x);
   };
 }
 
-export default {
-  draw,
-  setup,
-};
+export default BobrossSketch;

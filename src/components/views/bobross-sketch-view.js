@@ -1,14 +1,13 @@
 /* eslint-disable no-param-reassign */
 import React, { PureComponent } from 'react';
 import P5 from 'p5';
-import bobrossSketch from '../../lib/sketches/bobross';
+import BobrossSketch from '../../lib/sketches/bobross';
 import {
-  Button,
-  CloseButton,
+  TextButton,
   Container,
   OutputImage,
   Overlay,
-  OverlayHeader,
+  Header,
   Title,
 } from './_styled/bobross-sketch-view.styled';
 
@@ -18,9 +17,9 @@ function getPngDataUrl(canvas) {
   return pngDataUrl;
 }
 
-function setupP5(sketch) {
-  sketch.setup = bobrossSketch.setup(sketch);
-  sketch.draw = bobrossSketch.draw(sketch);
+function setupP5(sketchInstance, p5Sketch) {
+  p5Sketch.setup = sketchInstance.setup(p5Sketch);
+  p5Sketch.draw = sketchInstance.draw(p5Sketch);
 }
 
 export default class BobrossSketchView extends PureComponent {
@@ -28,13 +27,25 @@ export default class BobrossSketchView extends PureComponent {
     super();
 
     this.state = {
+      paused: false,
       pngDataUrl: null,
     };
+    this.sketch = new BobrossSketch();
   }
 
   componentDidMount() {
-    new P5(setupP5, this.component); // eslint-disable-line no-new
+    new P5((p5Sketch) => setupP5(this.sketch, p5Sketch), this.component); // eslint-disable-line no-new
   }
+
+  handleClickPause = () => {
+    const { paused } = this.state;
+
+    this.sketch.togglePause();
+
+    this.setState({
+      paused: !paused,
+    });
+  };
 
   handleClickRenderToImage = () => {
     if (!this.component) {
@@ -53,14 +64,26 @@ export default class BobrossSketchView extends PureComponent {
     });
   };
 
+  handleClickClear = () => {
+    this.sketch.clear();
+  };
+
   render() {
-    const { pngDataUrl } = this.state;
+    const { paused, pngDataUrl } = this.state;
 
     return (
       <>
-        <Button onClick={this.handleClickRenderToImage} type="button">
-          Render to image
-        </Button>
+        <Header>
+          <TextButton onClick={this.handleClickPause} type="button">
+            {paused ? 'Play' : 'Pause'}
+          </TextButton>
+          <TextButton onClick={this.handleClickClear} type="button">
+            Clear
+          </TextButton>
+          <TextButton onClick={this.handleClickRenderToImage} type="button">
+            Render to image
+          </TextButton>
+        </Header>
         <Container
           ref={(comp) => {
             this.component = comp;
@@ -68,15 +91,15 @@ export default class BobrossSketchView extends PureComponent {
         />
         {pngDataUrl && (
           <Overlay>
-            <OverlayHeader>
+            <Header>
               <Title>
                 You can save the image by right clicking it and using the
                 context menu
               </Title>
-              <CloseButton onClick={this.handleCloseOverlay} type="button">
+              <TextButton onClick={this.handleCloseOverlay} type="button">
                 Close overlay
-              </CloseButton>
-            </OverlayHeader>
+              </TextButton>
+            </Header>
             <OutputImage alt="Rendered output" src={pngDataUrl} />
           </Overlay>
         )}

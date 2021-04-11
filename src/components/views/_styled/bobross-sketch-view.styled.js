@@ -6,13 +6,6 @@ export const Container = styled.div`
   width: 100vw;
 `;
 
-export const Button = styled.button`
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin: 2rem;
-`;
-
 export const Overlay = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,7 +19,7 @@ export const Overlay = styled.div`
   background-color: white;
 `;
 
-export const OverlayHeader = styled.div`
+export const Header = styled.div`
   display: flex;
   flex: 0 1 auto;
   align-items: center;
@@ -54,7 +47,7 @@ export const Title = styled.h1`
   margin: 1rem 0;
 `;
 
-export const CloseButton = styled.button`
+export const TextButton = styled.button`
   background: none;
   color: inherit;
   border: none;
