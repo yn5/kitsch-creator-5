@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import GlobalStyle from './styles/reset';
+import ResetStyles from './styles/reset';
+import GlobalStyles from './styles/global';
 import BobrossSketchView from './components/views/bobross-sketch-view';
 import HomeView from './components/views/home-view';
 
@@ -9,19 +10,12 @@ function App() {
     <>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Switch>
-          <Route
-            component={HomeView}
-            path="/"
-            exact
-          />
-          <Route
-            component={BobrossSketchView}
-            path="/sketches/bobross"
-            exact
-          />
+          <Route component={HomeView} path="/" exact />
+          <Route component={BobrossSketchView} path="/sketches/bobross" exact />
         </Switch>
       </BrowserRouter>
-      <GlobalStyle />
+      <ResetStyles />
+      <GlobalStyles />
     </>
   );
 }
