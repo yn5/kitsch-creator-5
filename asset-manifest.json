@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/kitsch-creator-5/static/js/main.55106d49.chunk.js",
-    "main.js.map": "/kitsch-creator-5/static/js/main.55106d49.chunk.js.map",
+    "main.js": "/kitsch-creator-5/static/js/main.a8342146.chunk.js",
+    "main.js.map": "/kitsch-creator-5/static/js/main.a8342146.chunk.js.map",
     "runtime-main.js": "/kitsch-creator-5/static/js/runtime-main.20cff799.js",
     "runtime-main.js.map": "/kitsch-creator-5/static/js/runtime-main.20cff799.js.map",
-    "static/js/2.0c240ba8.chunk.js": "/kitsch-creator-5/static/js/2.0c240ba8.chunk.js",
-    "static/js/2.0c240ba8.chunk.js.map": "/kitsch-creator-5/static/js/2.0c240ba8.chunk.js.map",
+    "static/js/2.b1232caf.chunk.js": "/kitsch-creator-5/static/js/2.b1232caf.chunk.js",
+    "static/js/2.b1232caf.chunk.js.map": "/kitsch-creator-5/static/js/2.b1232caf.chunk.js.map",
     "index.html": "/kitsch-creator-5/index.html",
-    "static/js/2.0c240ba8.chunk.js.LICENSE.txt": "/kitsch-creator-5/static/js/2.0c240ba8.chunk.js.LICENSE.txt"
+    "static/js/2.b1232caf.chunk.js.LICENSE.txt": "/kitsch-creator-5/static/js/2.b1232caf.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.20cff799.js",
-    "static/js/2.0c240ba8.chunk.js",
-    "static/js/main.55106d49.chunk.js"
+    "static/js/2.b1232caf.chunk.js",
+    "static/js/main.a8342146.chunk.js"
   ]
 }
