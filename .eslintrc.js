@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['wslfx'],
+  extends: ['wslfx', 'prettier'],
 };
