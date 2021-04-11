@@ -74,11 +74,9 @@ class BobrossSketch {
 
   viewHeight = null;
 
-  setup = (sketch) => () => {
-    // TODO this is too higher and might influence the
-    // scrollable issue.
-    this.viewWidth = document.body.offsetWidth;
-    this.viewHeight = document.body.offsetHeight;
+  setup = (sketch, width, height) => () => {
+    this.viewWidth = width;
+    this.viewHeight = height;
     sketch.createCanvas(this.viewWidth, this.viewHeight);
 
     this.sketch = sketch;

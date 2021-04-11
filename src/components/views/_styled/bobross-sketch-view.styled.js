@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 
+const headerHeight = '3rem';
+
 export const Container = styled.div`
   width: 100%;
-  display: flex;
-  flex: 1 1 auto;
-  overflow: auto;
+  height: 100%;
+`;
+
+export const SketchContainer = styled.div`
+  height: calc(100% - ${headerHeight});
+  position: relative;
 `;
 
 export const Overlay = styled.div`
@@ -21,10 +26,11 @@ export const Overlay = styled.div`
 `;
 
 export const Header = styled.div`
+  height: ${headerHeight};
   display: flex;
   flex: 0 1 auto;
   align-items: center;
-  padding: 1rem;
+  padding: 0 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

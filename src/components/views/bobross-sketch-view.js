@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import P5 from 'p5';
 import BobrossSketch from '../../lib/sketches/bobross';
 import {
+  SketchContainer,
   TextButton,
   Container,
   OutputImage,
@@ -17,8 +18,8 @@ function getPngDataUrl(canvas) {
   return pngDataUrl;
 }
 
-function setupP5(sketchInstance, p5Sketch) {
-  p5Sketch.setup = sketchInstance.setup(p5Sketch);
+function setupP5(sketchInstance, p5Sketch, width, height) {
+  p5Sketch.setup = sketchInstance.setup(p5Sketch, width, height);
   p5Sketch.draw = sketchInstance.draw(p5Sketch);
 }
 
@@ -34,7 +35,22 @@ export default class BobrossSketchView extends PureComponent {
   }
 
   componentDidMount() {
-    new P5((p5Sketch) => setupP5(this.sketch, p5Sketch), this.component); // eslint-disable-line no-new
+    // Without the setTime .getBoundingClientRect() does not return
+    // desired results.
+    setTimeout(() => {
+      const boundingClientRect = this.component.getBoundingClientRect();
+      // eslint-disable-next-line no-new
+      new P5(
+        (p5Sketch) =>
+          setupP5(
+            this.sketch,
+            p5Sketch,
+            boundingClientRect.width,
+            boundingClientRect.height
+          ),
+        this.component
+      );
+    }, 1);
   }
 
   handleClickPause = () => {
@@ -72,7 +88,7 @@ export default class BobrossSketchView extends PureComponent {
     const { paused, pngDataUrl } = this.state;
 
     return (
-      <>
+      <Container>
         <Header>
           <TextButton onClick={this.handleClickPause} type="button">
             {paused ? 'Play' : 'Pause'}
@@ -84,7 +100,7 @@ export default class BobrossSketchView extends PureComponent {
             Render to image
           </TextButton>
         </Header>
-        <Container
+        <SketchContainer
           ref={(comp) => {
             this.component = comp;
           }}
@@ -103,7 +119,7 @@ export default class BobrossSketchView extends PureComponent {
             <OutputImage alt="Rendered output" src={pngDataUrl} />
           </Overlay>
         )}
-      </>
+      </Container>
     );
   }
 }
