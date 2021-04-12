@@ -13,15 +13,17 @@ export const SketchContainer = styled.div`
 `;
 
 export const Overlay = styled.div`
+  box-shadow: 0px 0px 12px 2px #999999;
   display: flex;
   flex-direction: column;
   z-index: 999;
   position: fixed;
   left: 0;
   top: 0;
-  padding: 2rem;
-  width: 100%;
-  height: 100%;
+  padding: 1rem;
+  margin: 1rem;
+  height: calc(100% - 2rem);
+  width: calc(100% - 2rem);
   background-color: white;
 `;
 
