@@ -22,26 +22,6 @@ function* colorGenerator() {
   }
 }
 
-function* positionGenerator() {
-  const jitterY = 0.01;
-  const jitterX = 0.004;
-  let x = Math.random();
-  let y = Math.random();
-  yield { x, y };
-
-  while (true) {
-    const randomX = getRandomPoint(jitterX);
-    const randomY = getRandomPoint(jitterY);
-    x = clip(x + randomX, 0, 1);
-    y = clip(y + randomY, 0, 1);
-
-    yield {
-      x,
-      y,
-    };
-  }
-}
-
 function* sizeGenerator() {
   let x = Math.random() ** 2 * 150;
 
@@ -64,7 +44,6 @@ const getColorR = colorGenerator();
 const getColorG = colorGenerator();
 const getColorB = colorGenerator();
 const getColorA = colorGenerator();
-const getPosition = positionGenerator();
 const getSize = sizeGenerator();
 
 class BobrossSketch {
@@ -73,6 +52,10 @@ class BobrossSketch {
   viewWidth = null;
 
   viewHeight = null;
+
+  getPosition = this.positionGenerator();
+
+  positionXJitter = 0.004;
 
   setup = (sketch, width, height) => () => {
     this.viewWidth = width;
@@ -97,6 +80,10 @@ class BobrossSketch {
     this.paused = !this.paused;
   };
 
+  setPositionXJitter = (newPositionXJitter) => {
+    this.positionXJitter = newPositionXJitter;
+  };
+
   drawEllipse = (sketch) => {
     const colorR = getColorR.next().value;
     const colorG = getColorG.next().value;
@@ -104,7 +91,7 @@ class BobrossSketch {
     const colorA = getColorA.next().value;
     const colorStroke = colorR * 0.35;
 
-    const { x, y } = getPosition.next().value;
+    const { x, y } = this.getPosition.next(this.positionXJitter).value;
     const position = { x: x * this.viewWidth, y: y * this.viewHeight };
     const size = getSize.next().value;
 
@@ -112,6 +99,26 @@ class BobrossSketch {
     sketch.fill(colorR, colorG, colorB, colorA);
     sketch.ellipse(position.x, position.y, size.y, size.x);
   };
+
+  *positionGenerator() {
+    let x = Math.random();
+    let y = Math.random();
+    yield { x, y };
+
+    while (true) {
+      const jitterX = this.positionXJitter;
+      const jitterY = 0.01;
+      const randomX = getRandomPoint(jitterX);
+      const randomY = getRandomPoint(jitterY);
+      x = clip(x + randomX, 0, 1);
+      y = clip(y + randomY, 0, 1);
+
+      yield {
+        x,
+        y,
+      };
+    }
+  }
 }
 
 export default BobrossSketch;

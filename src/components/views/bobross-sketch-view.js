@@ -10,7 +10,9 @@ import {
   Overlay,
   Header,
   Title,
+  Modal,
 } from './_styled/bobross-sketch-view.styled';
+import Controls from '../controls';
 
 function getPngDataUrl(canvas) {
   const pngDataUrl = canvas.childNodes?.[0]?.toDataURL('image/png');
@@ -28,8 +30,10 @@ export default class BobrossSketchView extends PureComponent {
     super();
 
     this.state = {
+      controlsOpen: false,
       paused: false,
       pngDataUrl: null,
+      positionXJitter: 0.004,
     };
     this.sketch = new BobrossSketch();
   }
@@ -84,12 +88,46 @@ export default class BobrossSketchView extends PureComponent {
     this.sketch.clear();
   };
 
+  handleClickControls = () => {
+    this.setState({
+      controlsOpen: true,
+    });
+  };
+
+  handleCloseControls = () => {
+    this.setState({
+      controlsOpen: false,
+    });
+  };
+
   render() {
-    const { paused, pngDataUrl } = this.state;
+    const { controlsOpen, paused, pngDataUrl, positionXJitter } = this.state;
+    const controlsConfig = [
+      {
+        type: 'slider',
+        id: 'positionXJitter',
+        min: 1,
+        max: 1000,
+        value: Number(positionXJitter),
+        onChange: (e) => {
+          const { value } = e.target;
+          const convertedValue = (value / 1000) * 0.01 + 0.001;
+
+          this.sketch.setPositionXJitter(convertedValue);
+
+          this.setState({
+            positionXJitter: value,
+          });
+        },
+      },
+    ];
 
     return (
       <Container>
         <Header>
+          <TextButton onClick={this.handleClickControls} type="button">
+            Show controls
+          </TextButton>
           <TextButton onClick={this.handleClickPause} type="button">
             {paused ? 'Play' : 'Pause'}
           </TextButton>
@@ -105,6 +143,14 @@ export default class BobrossSketchView extends PureComponent {
             this.component = comp;
           }}
         />
+        {controlsOpen && (
+          <Modal>
+            <TextButton onClick={this.handleCloseControls} type="button">
+              Close overlay
+            </TextButton>
+            <Controls config={controlsConfig} />
+          </Modal>
+        )}
         {pngDataUrl && (
           <Overlay>
             <Header>

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const headerHeight = '3rem';
+const layerShadow = '0px 0px 12px 2px #999999';
 
 export const Container = styled.div`
   width: 100%;
@@ -12,8 +13,18 @@ export const SketchContainer = styled.div`
   position: relative;
 `;
 
+export const Modal = styled.div`
+  background-color: white;
+  box-shadow: ${layerShadow};
+  padding: 1rem;
+  left: 1rem;
+  top: 3rem;
+  z-index: 99;
+  position: fixed;
+`;
+
 export const Overlay = styled.div`
-  box-shadow: 0px 0px 12px 2px #999999;
+  box-shadow: ${layerShadow};
   display: flex;
   flex-direction: column;
   z-index: 999;
