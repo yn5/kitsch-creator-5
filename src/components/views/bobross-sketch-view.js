@@ -25,6 +25,13 @@ function setupP5(sketchInstance, p5Sketch, width, height) {
   p5Sketch.draw = sketchInstance.draw(p5Sketch);
 }
 
+function mapWithCurve(input, min, max, exponent = 2) {
+  const curvedInput = input ** exponent;
+  const output = curvedInput * (max - min) + min;
+
+  return output;
+}
+
 export default class BobrossSketchView extends PureComponent {
   constructor() {
     super();
@@ -34,6 +41,7 @@ export default class BobrossSketchView extends PureComponent {
       paused: false,
       pngDataUrl: null,
       positionXJitter: 0.004,
+      positionYJitter: 0.01,
     };
     this.sketch = new BobrossSketch();
   }
@@ -101,7 +109,13 @@ export default class BobrossSketchView extends PureComponent {
   };
 
   render() {
-    const { controlsOpen, paused, pngDataUrl, positionXJitter } = this.state;
+    const {
+      controlsOpen,
+      paused,
+      pngDataUrl,
+      positionXJitter,
+      positionYJitter,
+    } = this.state;
     const controlsConfig = [
       {
         type: 'slider',
@@ -111,12 +125,29 @@ export default class BobrossSketchView extends PureComponent {
         value: Number(positionXJitter),
         onChange: (e) => {
           const { value } = e.target;
-          const convertedValue = (value / 1000) * 0.01 + 0.001;
+          const convertedValue = mapWithCurve(value / 1000, 0.001, 0.01, 2);
 
           this.sketch.setPositionXJitter(convertedValue);
 
           this.setState({
             positionXJitter: value,
+          });
+        },
+      },
+      {
+        type: 'slider',
+        id: 'positionYJitter',
+        min: 1,
+        max: 1000,
+        value: Number(positionYJitter),
+        onChange: (e) => {
+          const { value } = e.target;
+          const convertedValue = mapWithCurve(value / 1000, 0.001, 0.01, 2);
+
+          this.sketch.setPositionYJitter(convertedValue);
+
+          this.setState({
+            positionYJitter: value,
           });
         },
       },

@@ -57,6 +57,8 @@ class BobrossSketch {
 
   positionXJitter = 0.004;
 
+  positionYJitter = 0.01;
+
   setup = (sketch, width, height) => () => {
     this.viewWidth = width;
     this.viewHeight = height;
@@ -84,6 +86,10 @@ class BobrossSketch {
     this.positionXJitter = newPositionXJitter;
   };
 
+  setPositionYJitter = (newPositionYJitter) => {
+    this.positionYJitter = newPositionYJitter;
+  };
+
   drawEllipse = (sketch) => {
     const colorR = getColorR.next().value;
     const colorG = getColorG.next().value;
@@ -107,7 +113,7 @@ class BobrossSketch {
 
     while (true) {
       const jitterX = this.positionXJitter;
-      const jitterY = 0.01;
+      const jitterY = this.positionYJitter;
       const randomX = getRandomPoint(jitterX);
       const randomY = getRandomPoint(jitterY);
       x = clip(x + randomX, 0, 1);
